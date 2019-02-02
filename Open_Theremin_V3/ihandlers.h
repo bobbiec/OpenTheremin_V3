@@ -21,16 +21,30 @@ extern volatile bool reenableInt1;    // Pitch read flag
 extern volatile uint8_t  vWavetableSelector;
 extern volatile uint16_t vPointerIncrement;  // Table pointer increment
 
-inline void resetPitchFlag()   { pitchValueAvailable = false; }
-inline void resetVolFlag()     { volumeValueAvailable = false; }
+inline void resetPitchFlag()   {
+  pitchValueAvailable = false;
+}
+inline void resetVolFlag()     {
+  volumeValueAvailable = false;
+}
 
-inline void savePitchCounter() { pitch_counter_l=pitch_counter; }
-inline void saveVolCounter()   { vol_counter_l=vol_counter; };
+inline void savePitchCounter() {
+  pitch_counter_l = pitch_counter;
+}
+inline void saveVolCounter()   {
+  vol_counter_l = vol_counter;
+};
 
-inline void setWavetableSampleAdvance(uint16_t val) { vPointerIncrement = val;}
+inline void setWavetableSampleAdvance(uint16_t val) {
+  vPointerIncrement = val;
+}
 
-inline void disableInt1() { EIMSK &= ~ (1 << INT1); }
-inline void enableInt1()  { if (reenableInt1) EIMSK |=   (1 << INT1); }
+inline void disableInt1() {
+  EIMSK &= ~ (1 << INT1);
+}
+inline void enableInt1()  {
+  if (reenableInt1) EIMSK |=   (1 << INT1);
+}
 
 void ihInitialiseTimer();
 void ihInitialiseInterrupts();

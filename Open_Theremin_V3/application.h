@@ -11,10 +11,10 @@ enum AppMode  {MUTE = 0, NORMAL};
 class Application {
   public:
     Application();
-    
+
     void setup();
     void loop();
-    
+
   private:
     static const uint16_t MAX_VOLUME = 4095;
     static const uint32_t TRIM_PITCH_FACTOR = 33554432;
@@ -23,29 +23,27 @@ class Application {
     static const int16_t BUTTON_PIN = 6;
     static const int16_t LED_PIN_1  = 18;
     static const int16_t LED_PIN_2  = 19;
-    
+
 
     static const int16_t PITCH_POT = 0;
     static const int16_t VOLUME_POT = 1;
     static const int16_t WAVE_SELECT_POT = 2;
     static const int16_t REGISTER_SELECT_POT = 3;
 
-
-    
-#if SERIAL_ENABLED    
-    static const int BAUD = 115200;
+#if SERIAL_ENABLED
+    static const int32_t BAUD = 115200;
 #endif
 
     AppState _state;
     AppMode  _mode;
-        
+
     void calibrate();
     void calibrate_pitch();
     void calibrate_volume();
 
 
     AppMode nextMode();
-    
+
     void initialiseTimer();
     void initialiseInterrupts();
     void InitialisePitchMeasurement();

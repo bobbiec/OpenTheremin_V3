@@ -13,5 +13,3 @@ void ticktimer (uint16_t ticks) {
 void millitimer (uint16_t milliseconds) {
   ticktimer(millisToTicks(milliseconds));
 }
-
-

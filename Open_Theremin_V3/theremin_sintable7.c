@@ -1029,5 +1029,3 @@ const int16_t sine_table7[1024] PROGMEM = {\
 3,
 
 };
-
-

@@ -57,45 +57,45 @@ static volatile uint8_t  debounce_p, debounce_v  = 0;  // Counters for debouncin
 void ihInitialiseTimer() {
   /* Setup Timer 1, 16 bit timer used to measure pitch and volume frequency */
   TCCR1A = 0;                     // Set Timer 1 to Normal port operation (Arduino does activate something here ?)
-  TCCR1B = (1<<ICES1)|(1<<CS10);  // Input Capture Positive edge select, Run without prescaling (16 Mhz)
-  TIMSK1 = (1<<ICIE1);            // Enable Input Capture Interrupt
-  
+  TCCR1B = (1 << ICES1) | (1 << CS10); // Input Capture Positive edge select, Run without prescaling (16 Mhz)
+  TIMSK1 = (1 << ICIE1);          // Enable Input Capture Interrupt
+
   TCCR0A = 3; //Arduino Default: Fast PWM
   TCCR0B = 3; //Arduino Default: clk I/O /64 (From prescaler)
   TIMSK0 = 1; //Arduino Default: TOIE0: Timer/Counter0 Overflow Interrupt Enable
-  
+
 }
 
 void ihInitialiseInterrupts() {
   /* Setup interrupts for Wave Generator and Volume read */
-  EICRA = (1<<ISC00)|(1<<ISC01)|(1<<ISC11)|(1<<ISC10) ; // The rising edges of INT0 and INT1 generate an interrupt request.
+  EICRA = (1 << ISC00) | (1 << ISC01) | (1 << ISC11) | (1 << ISC10) ; // The rising edges of INT0 and INT1 generate an interrupt request.
   reenableInt1 = true;
-  EIMSK = (1<<INT0)|(1<<INT1);                          // Enable External Interrupt INT0 and INT1
+  EIMSK = (1 << INT0) | (1 << INT1);                    // Enable External Interrupt INT0 and INT1
 }
 
 void ihInitialisePitchMeasurement() //Measurement of variable frequency oscillator on Timer 1
-{   reenableInt1 = false;
-    EIMSK =  0; // Disable External Interrupts
-    TCCR1A = 0;           //Normal port operation Timer 1
-    TIMSK1 = (1<<TOIE1);  //Timer/Counter1, Overflow Interrupt Enable
-   
-  }
-  
+{ reenableInt1 = false;
+  EIMSK =  0; // Disable External Interrupts
+  TCCR1A = 0;           //Normal port operation Timer 1
+  TIMSK1 = (1 << TOIE1); //Timer/Counter1, Overflow Interrupt Enable
+
+}
+
 void ihInitialiseVolumeMeasurement() //Measurement of variable frequency oscillator on Timer 0
-{   reenableInt1 = false;
-    EIMSK =  0; // Disable External Interrupts
-    TIMSK1 = 0; //Timer/Counter1, Overflow Interrupt Disable
+{ reenableInt1 = false;
+  EIMSK =  0; // Disable External Interrupts
+  TIMSK1 = 0; //Timer/Counter1, Overflow Interrupt Disable
 
-    TCCR0A = 0; // Normal port operation, OC0A disconnected. Timer 0
-    TIMSK0 = (1<<OCIE0A);  //TOIE0: Timer/Counter0 Overflow Interrupt Enable
-    OCR0A = 0xff; // set Output Compare Register0.
-    
-    TCCR1A = 0;  //Normal port operation Timer 1
-    TCCR1B = (1<<CS10)|(1<<CS12); // clk I/O /1024 (From prescaler)
-    TCCR1C=0;
+  TCCR0A = 0; // Normal port operation, OC0A disconnected. Timer 0
+  TIMSK0 = (1 << OCIE0A); //TOIE0: Timer/Counter0 Overflow Interrupt Enable
+  OCR0A = 0xff; // set Output Compare Register0.
 
-    
-  }
+  TCCR1A = 0;  //Normal port operation Timer 1
+  TCCR1B = (1 << CS10) | (1 << CS12); // clk I/O /1024 (From prescaler)
+  TCCR1C = 0;
+
+
+}
 
 /* 16 bit by 8 bit multiplication */
 static inline uint32_t mul_16_8(uint16_t a, uint8_t b)
@@ -127,12 +127,12 @@ ISR (INT1_vect) {
 
   int16_t  waveSample;
   uint32_t scaledSample;
-  uint16_t offset = (uint16_t)(pointer>>6) & 0x3ff;
+  uint16_t offset = (uint16_t)(pointer >> 6) & 0x3ff;
 
 #if CV_ENABLED                                 // Generator for CV output
 
- vPointerIncrement = min(vPointerIncrement, 4095);
- mcpDacSend(vPointerIncrement);        //Send result to Digital to Analogue Converter (audio out) (9.6 us)
+  vPointerIncrement = min(vPointerIncrement, 4095);
+  mcpDacSend(vPointerIncrement);        //Send result to Digital to Analogue Converter (audio out) (9.6 us)
 
 #else   //Play sound
 
@@ -209,12 +209,10 @@ ISR (TIMER1_CAPT_vect) {
 ISR(TIMER0_COMPA_vect)
 {
   timer_overflow_counter++;
-  }
+}
 
 /* VOLUME read absolute frequency - interrupt service routine for calibration measurement */
 ISR(TIMER1_OVF_vect)
 {
   timer_overflow_counter++;
 }
-
-

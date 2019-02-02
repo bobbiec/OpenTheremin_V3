@@ -1,25 +1,25 @@
 /* Arduino WaveHC Library
- * Copyright (C) 2009 by William Greiman
- *  
- * This file is part of the Arduino WaveHC Library
- *  
- * This Library is free software: you can redistribute it and/or modify 
- * it under the terms of the GNU General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This Library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with the Arduino WaveHC Library.  If not, see
- * <http://www.gnu.org/licenses/>.
- */
+   Copyright (C) 2009 by William Greiman
+
+   This file is part of the Arduino WaveHC Library
+
+   This Library is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with the Arduino WaveHC Library.  If not, see
+   <http://www.gnu.org/licenses/>.
+*/
 /**
- *  Macros and inline functions for MCP4921 DAC
- */   
+    Macros and inline functions for MCP4921 DAC
+*/
 #ifndef mcpDac_h
 #define mcpDac_h
 
@@ -66,7 +66,7 @@ inline void mcpDacInit(void) {
 }
 //------------------------------------------------------------------------------
 // send 12 bits to dac
-// trusted compiler to optimize and it does 
+// trusted compiler to optimize and it does
 // csLow to csHigh takes 8 - 9 usec on a 16 MHz Arduino
 inline void mcpDacSend(uint16_t data) {
   mcpDacCsLow();

@@ -15,5 +15,3 @@
 #define HW_LED2_TOGGLE      (PORTC = PORTC ^ (1<<PORTC5))
 
 #endif // _HW_H
-
-
